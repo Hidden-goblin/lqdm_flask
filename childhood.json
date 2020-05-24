@@ -1,0 +1,58 @@
+[
+  {
+    "name": "jungle urbaine",
+    "description": "Votre personnage a grandi dans les rues d'une grande ville. Il a dû se débrouiller pour passer inaperçu ou au contraire s'imposer. Il n'a certainement pas appris a lire pendant cette époque mais il connaît les trucs pour survivre dans les rues.",
+    "innate": [
+      "mouvements silencieux urbains",
+      "combat à mains nues",
+      "anonymat",
+      "pickpocket",
+      "vigilance"
+    ]
+  },
+  {
+    "name": "jungle naturelle",
+    "description": "Pour certains votre personnage a eu une enfance \"heureuse\" hors des grandes citées. Il a connu la nature... Mais ceux la n'ont jamais dû se déplacer dans les bois ou dans les plaines infinies de sable. Même si vos parents vous épaulaient, il a fallu très tôt se débrouiller seul : attraper sa pitance lorsque les réserves de nourriture se faisaient basses, se déplacer en silence pour ne pas attirer les prédateurs etc.",
+    "innate": [
+      "mouvements silencieux rural",
+      "pister",
+      "vigilance",
+      "natation",
+      "alpinisme"
+    ]
+  },
+  {
+    "name": "jungle occulte",
+    "description": "Oui vous êtes né parmi les mages, vous avez grandi parmi les forces surnaturelles. Il a fallu rapidement les maîtriser ou se retrouver mis a l'écart. Alors pour vous la magie a été un passable obligé. Se défendre, utiliser les forces surnaturelles et essayer de passer inaperçu.",
+    "innate": [
+      "science des éléments",
+      "utiliser objet",
+      "incantation",
+      "dissimulation de la magie",
+      "détection de la magie"
+    ]
+  },
+  {
+    "name": "jungle du commerce",
+    "description": "Très tôt vous avez été mis a contribution dans les activités commerciales de vos parents ou alors vous avez mis en place un petit commerce parallèle à votre humble mesure. Il a fallu connaître les rouages de la psychologie pour amener le client a payer le prix le plus fort, et demander a vos \"fournisseur\" les tarifs les plus bas.",
+    "innate": [
+      "corruption",
+      "marchander",
+      "sincérité",
+      "jeu",
+      "estimation"
+    ]
+  },
+  {
+    "name": "jungle de la connaissance",
+    "description": "Vous êtes tombé dans le cercle de la connaissance. Vous vouliez tout savoir sur tout et vous vous êtes donnés les moyens pour y arriver. Malgré tout vous n'avez pas réussit a percer tous les secrets et beaucoup de sujet vous restent obscurs.",
+    "innate": [
+      "mythes",
+      "histoire",
+      "langue",
+      "bricolage",
+      "mémoriser"
+    ]
+  }
+]
+
