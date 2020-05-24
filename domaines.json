@@ -1,0 +1,6 @@
+{
+    "basic": ["one", "two", "three"],
+    "connaissance": ["four", "six", "seven"],
+    "combat": ["eight", "nine", "ten"],
+    "perception": ["one", "eleven", "twelve"]
+}

@@ -1,0 +1,882 @@
+[
+    {
+        "name": "chercher",
+        "description": "Indique le degré de soin apporté à la recherche.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "courir",
+        "description": "Cette compétence rend compte de la capacité du personnage à gérer une course. On pourra préciser la compétence pour des effets plus spécifiques : sprint, marathon etc.",
+        "domaines": [
+            "basique",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "écouter",
+        "description": "On mesure le degré d'attention d'écoute que peut produire le personnage. Plus la compétence sera élevée plus le personnage pourra identifier de petit détails sonores. Un personnage sourd ne peut posséder cette compétence à moins qu'il ne le soit devenu après son obtention.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "pickpocket",
+        "description": "Voler les biens portés par une personne sans que celle ci s'en aperçoive.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "alpinisme",
+        "description": " capacité à se déplacer en sureté dans les massifs montagneux",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "impressionner",
+        "description": "capacité d'un personnage à infliger la crainte du fait de sa présence",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "mouvements silencieux ruraux",
+        "description": "Art d'être silencieux dans les espaces naturels",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "mouvements silencieux urbains",
+        "description": "Art d'être silenceux dans les espaces artificialisés comme les villes et les complexes spaciaux",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "se cacher",
+        "description": "Art de se soustraire à la vue dans un espace",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "pister",
+        "description": "Art de suivre la trace de quelque chose sur un territoire",
+        "domaines": [
+            "basique",
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "anonymat",
+        "description": "Art de passer inarperçu dans une foule",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "orientation en milieux souterrain",
+        "description": "Capacité à s'orienter dans des milieux confinés comme des cavernes ou des coursives d'installations fermées",
+        "domaines": [
+            "développement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "engraver",
+        "description": "Permet de conférer à un object des propriétés occultes",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "maîtrise de soi",
+        "description": "Capacité à garder son calme dans des situations périeuses",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "dessins techniques",
+        "description": "Capacité à transmettre des informations sur la construction d'un objet par l'élaboration de plan et de diagrammes. Il est aussi possible de dissimuler des infromations dans ce type de dessins",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "investigation",
+        "description": "Capacité à mener une enquête. Cela ne préssupose pas de la réussite de l'enqête.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "survie",
+        "description": "capacité à rester envie dans un milieu hostile en utilisant les ressources disponibles",
+        "domaines": [
+            "développement corporel",
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "goûter",
+        "description": "Cette compétence est similaire à la compétence \"Écouter\" pour le sens du goûter.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "grimper",
+        "description": "Cette compétence rend compte de la capacité du personnage à escalader des parois ou d'autres objets/monuments plus grands que lui. Elle ne donne pas des capacités extraordinaires : un objet ne pouvant être escalader ne le pourra pas plus être grâce à la compétence.",
+        "domaines": [
+            "basique",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "lancer",
+        "description": "On mesure l'habileté du personnage à projeter un objet avec force et précision. Cette compétence peut faire parti du domaines \"Sciences du Combat\".",
+        "domaines": [
+            "basique",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "mémoriser",
+        "description": "Capacité du personnage à retenir des informations.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "nager",
+        "description": "Capacité à se mouvoir dans l'eau. D'autres compétences peuvent être prises pour des effets plus particuliers (vitesse, endurance etc.)",
+        "domaines": [
+            "basique",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "premiers secours",
+        "description": "Cette compétence permet le maintien de la vie en attendant des secours.",
+        "domaines": [
+            "basique",
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "sauter",
+        "description": "Mesure la capacité du personnage à se déplacer en hauteur ou en longueur après un dernier appui. Cette compétence peut être prise de manière plus spécifique pour un saut en longueur, en hauteur, avec un matériel spécifique etc.",
+        "domaines": [
+            "basique",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "sentir",
+        "description": "Cette compétence est similaire à la compétence \"Écouter\" pour le sens de l'odorat.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "se repérer",
+        "description": "Un personnage possédant cette compétence peut déterminer sa position et choisir son chemin.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "toucher",
+        "description": "Cette compétence est similaire à la compétence \"Écouter\" pour le sens du toucher.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "voir",
+        "description": "Cette compétence est similaire à la compétence \"Écouter\" pour le sens de la vue.",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "course en endurance",
+        "description": "Capacité à courir sur de longues distances avec peu de repos.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "conter",
+        "description": "Capacité à narrer des histoires",
+        "domaines": [
+            "basique",
+            "sciences et humanités",
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "empathie",
+        "description": "Capacité à ressentir ce que ressent autrui et à faire ressentir à autrui ses propres sentiments",
+        "domaines": [
+            "sciences et humanités",
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "dessiner",
+        "description": "Capacité à réaliser des oeuvres graphiques",
+        "domaines": [
+            "basique",
+            "arts et artisanats"
+        ],
+        "category": "basique"
+    },
+    {
+        "name": "chanter",
+        "description": "Capacité à chanter",
+        "domaines": [
+            "basique",
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "dissimuler",
+        "description": "Permet la dissimulation d'objets ou de personnes dans un environnement",
+        "domaines": [
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "cuisiner",
+        "description": "Capacité à préparer de bon plats",
+        "domaines": [
+            "basique",
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "danse",
+        "description": "Permet la connaissance et la réalisation de danses.",
+        "domaines": [
+            "arts et artisanats",
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "ébénisterie",
+        "description": "Travail du bois en général, en particulier dans le domaines de la réalisation de formes esthétiques.",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "forge",
+        "description": "Travail des métaux en général. Elle sert aussi pour la création d'armes et armures de type médiévales.",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "musique",
+        "description": "Permet la connaissance de la musique et l'utilisation d'un instrument de musique. Chaque nouvel instrument devra faire l'objet d'une compétence.",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "peinture",
+        "description": "Connaissance des techniques de la peinture d'art. ",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "orfèvrerie",
+        "description": "Travail des métaux et pierres précieux en vue d'en faire des bijoux.",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "sculpture",
+        "description": "Création d'objets d'arts par suppression de matière.",
+        "domaines": [
+            "arts et artisanats"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "analyse de la situation",
+        "description": "Permet au personnage d'avoir une vue d'ensemble sur une situation. Elle permet d'indiquer les lieux les plus avantageux et ceux à éviter. En combat à distance, elle donne la difficulté pour être touché. Cette difficulté peut varier en fonction du lieu et des actions entreprises par le personnage.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "combat au bouclier",
+        "description": "Capacité du personnage à combattre contre/à l'aide d'un bouclier énergétique toutes armes.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "combat au bouclier médiéval",
+        "description": "Cette compétence permet l'utilisation de bouclier de type médiévaux ou du moins que l'on doit manier d'une main pour se protéger.  L'utilisation de cette compétence permet une action supplémentaire lors d'un tour. Le niveau qu'utilisera le joueur pour ses actions du tour, sera le plus faible entre la compétence d'arme et la compétence de bouclier. Elle peut servir de défense : les dommages que subit le personnage sont diminués du niveau de la compétence. (1 pour Novice, 2 pour Amateur, 3 pour Professionnel et 4 pour Expert.) Elle peut servir pour repousser un adversaire. Sur une réussite, l'adversaire subira une pénalité égale à la marge de réussite pour le tour suivant. Elle peut servir de défense totale. Cette action augmente d'un niveau les compétences d'armes du personnage. La réussite permet de ne subir aucun dommage. Elle ne permet pas de blesser des adversaires. En cas d'échec, les dommages subis seront d'au maximum un niveau de santé.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "commander",
+        "description": "Connaissance de la manière de donner des ordres à une troupe de quelques hommes. Un jet en \"commander\" réussit oblige une personne à faire un test volonté, d'une difficulté égale au niveau de la compétence augmenté de 1 par tranche de 4 points de marge, si l'ordre est contraire aux convictions de la personne ou la met directement en danger. % Utilisation à revoir",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "embuscades",
+        "description": "Lorsqu'une embuscade est réussie, les assaillants ont un bonus de 5 sur le test d'initiative. De même les jets pour toucher seront automatiquement augmentés de 5. Ce bonus ne rentrera pas en compte dans le calcul de la marge de réussite.% Utilisation à revoir",
+        "domaines": [
+            "sciences du combat",
+            "basique"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "main gauche",
+        "description": "Permet l'utilisation d'une arme avec la main \"gauche\". Cette compétence permet la réalisation d'une action supplémentaire dans le tour. Action de défense.Action offensive.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "maniement armes médiévales à deux mains",
+        "description": "Cette compétence permet l'utilisation de toutes les armes médiévales nécessitant les deux mains pour être maniées.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "maniement armes médiévales à une main",
+        "description": "Cette compétence permet l'utilisation de toutes les armes médiévales nécessitant une main pour être maniées.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "maniement armes médiévales d'hast",
+        "description": "Cette compétence permet l'utilisation de toutes les armes médiévales de taille et d'encombrement inhabituels.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "pièges",
+        "description": "Permet la fabrication, la mise en place et le désamorçage de pièges mécaniques.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "rapidité",
+        "description": "Par l'expérience du combat, cette compétence permet d'augmenter la vitesse de réaction du possesseur. Elle est prise en compte lors de la détermination de l'Initiative. Elle augmente le jet de dé du niveau de la compétence.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "tir arc et arbalète",
+        "description": "Cette compétence permet l'utilisation des armes tels que les arcs et les arbalètes.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "tir armes légères",
+        "description": "Cette compétence permet le maniement des armes à feu et énergétique de poing.",
+        "domaines": [
+            "sciences du combat"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "acrobatie",
+        "description": "Permet de faire des bonds artistiques (saut périlleux, salto etc.)Elle permet aussi de prendre appui sur des surfaces inclinées pour augmenter la hauteur de saut.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "course de fond",
+        "description": "Cette compétence permet au personnage de courir sur de longues périodes et de longues distances.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "endurance",
+        "description": "Capacité du personnage à encaisser les coups.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "escalader",
+        "description": "Cette compétence permet au personnage d'évoluer verticalement le long de parois.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "nage de vitesse",
+        "description": "Cette compétence permet au personnage de nager vite sur de petites distance. Par rapport à la compétence Nager à un même niveau, elle est considérée d'un cran supérieure.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "nage en endurance",
+        "description": "Cette compétence permet au personnage de nager sur de longues distances longtemps. Par rapport à la compétence Nager à un même niveau, elle est considérée d'un cran supérieure.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "puissance musculaire",
+        "description": "Cette compétence mesure la puissance physique acquise par l'entraînement. Elle intervient lors de tous les tests faisant intervenir la force du personnage. Le meneur de jeu peut décider d'une diminution de la compétence si il juge que l'activité et/ou l'entraînement du personnage ne permet pas le maintient de cette puissance.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "saut avec instrument",
+        "description": "Cette compétence mesure la capacité du personnage à utiliser un instrument pour sauter.",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "vigilance",
+        "description": "aptitude du personnage à rester éveillé et alerte pendant une longue période. Sans remplacer les compétences de sens (voir, écouter...) elle permet de les utiliser sans malus au cas où. ",
+        "domaines": [
+            "developpement corporel"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "bureaucratie",
+        "description": "Cette compétence permet la connaissance des différents systèmes administratifs en vigueur dans les systèmes connus. Elle peut servir pour déduire le système bureaucratique utilisé dans un lieu inconnu.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "comédie",
+        "description": "Connaissance des principaux courants théâtraux. Capacité à jouer un rôle par le personnage.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "cultures",
+        "description": "Connaissance générale des us et coutumes des peuples. Elle permet aussi l'établissement d'une communication basique. Cette compétence doit être prise par peuplade pour avoir une réelle efficience ie une compétence spécifique sera toujours plus élevée que la compétence Cultures.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "diplomatie",
+        "description": "Science des rapports internationaux et par extension intersystèmes. ",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "enseignement",
+        "description": "Capacité permettant au personnage de transmettre ses connaissances.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "évaluation des personnes",
+        "description": "Cette compétence permet au personnage d'avoir une opinion sur le caractère, les idées et les passions importantes d'une cible avec laquelle il aura discuté au moins un quart d'heure.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "histoire",
+        "description": "Connaissance de l'histoire en général. Cette compétence peut être prise par peuple, par contrée pour plus d'efficience.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "langues",
+        "description": "Connaissance et pratique d'une langue. De base, tous les personnages ont une connaissance \"Profane\" du Lanufié.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "marchander",
+        "description": "Permet au personnage de faire baisser ou augmenter le prix d'une marchandise.",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "philosophie",
+        "description": "Cette compétence permet au personnage de converser avec d'autres personnes et à influencer leurs idées par l'argumentation uniquement. ",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "torturer",
+        "description": "Capacité à briser une personne psychologiquement pour obtenir une information ou pour la conditionner...",
+        "domaines": [
+            "sciences et humanités"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "alchimie",
+        "description": "L'utilisateur de l'alchimie peut préparer des potions, onguents et autres poudres permettant d'obtenir des effets magiques. Un laboratoire approprié est nécessaire pour réaliser les préparations.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "cartocratie",
+        "description": "Permet l'utilisation de la magie de divination basée sur les cartes. Elle peut aussi servir à lancer des sorts ritualisés.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "chronocratie",
+        "description": "Cette compétence sert à la manipulation du temps. Elle peut ralentir, accélérer le défilement du temps pour un lieu déterminé. Elle permet la vision d'événements passés ou avenir liés à un lieu.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "connaissance de la Magie",
+        "description": "Cette compétence permet la connaissance des symboles et de la nature de la magie. En aucun cas elle ne permet d'utiliser la magie.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "détection de la Magie",
+        "description": "Cette compétence permet la perception de la magie. Seul un mage pourra avoir des informations sur la nature de la magie présente.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "dissimulation de la magie",
+        "description": "Cette compétence permet de masquer le bruit produit par la magie. De plus elle permet de masquer l'aura que dégagent les objets magiques.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "enchantements",
+        "description": "Cette compétence permet la création d'objets magiques.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "art des illusions",
+        "description": "Tromper les sens, induire en erreur, voilà l'objet de cet art occulte. Incapable de blesser par lui même, il peut masquer de véritables pièges ou autre élément naturel...",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "herboristerie",
+        "description": "Tout comme l'alchimie, cette compétence permet l'utilisation des pouvoirs présents dans les plantes.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "incantation",
+        "description": "Cette compétence permet l'appel d'entité et de créature de magie pure.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "mystère",
+        "description": "Connaissance des principes occultes de la religion et leurs liens avec les textes sacrés. Modifie de 1 (Amateur), 2 (Professionnel) ou 3 (Expert) la marge de réussite pour obtenir un Miracle.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "mythes",
+        "description": "Connaissance des traditions orales relatifs aux temps passés. Cette compétence correspond aux grands mythes fondateurs de l'Union Terrienne. Prise en lien avec une culture, elle permet une connaissance approfondie des mythes relatifs à cette culture.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "nécrocratie",
+        "description": "Magie de contrôle des corps morts.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "onirontocratie",
+        "description": "L'utilisateur peut modifier la réalité par la manipulation des autres plans de réalités (Ex magie des Esprits).",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "phytocratie",
+        "description": "Cette compétence permet de lancer des sorts utilisant les espèces végétales et leurs fonctionnement.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "psychocratie",
+        "description": "Ex maîtrise psionique. Modification de la réalité par la seule force de l'esprit.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "sciences des éléments",
+        "description": "Cette compétence permet de lancer des sorts utilisant les Éléments",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "spatiocratie",
+        "description": "Cette compétence permet de lancer des sorts utilisant l'Espace",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "théologie",
+        "description": "Cette compétence correspond à la connaissance des rites et des textes relatifs aux cultes. Sans culte particulier, elle s'intéresse à l'ensemble des cultes existants et ne permet, même à très haut niveau, qu'une connaissance superficielle. Avec un culte de défini, elle permet une connaissance intime de la symbolique, de la liturgie, des branches du culte etc.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "utiliser objet",
+        "description": "Cette compétence permet à un non mage d'utiliser les effets magiques contenus dans un objet. On utilisera cette compétence pour les duels de magie.",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "zoocratie",
+        "description": "Cette compétence permet de lancer des sorts utilisant les espèces animales et leurs fonctionnement",
+        "domaines": [
+            "occulte et religions"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "armement",
+        "description": "Cette compétence correspond à  la connaissance des armes et à la capacité à fabriquer de nouvelles armes. Toutes les armes sont classées par type et sont donc limitées en potentiel destructeur. Les armes médiévales peuvent être fabriquées à l'aide de la compétence \"forger\" ou de la compétence \"archerie\".",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "bricolage",
+        "description": "Cette compétence permet la création, la modification et la réparation temporaire d' objets techniques. La durée d'utilisation sera décidée et annoncée par le Meneur de Jeu.",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "chirurgie",
+        "description": "C'est la compétence nécessaire pour soigner les dommages important reçus par un corps. ",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "conduction de machine",
+        "description": "Cette compétence est la connaissance et la pratique du pilotage d'un véhicule. Cette compétence est un terme générique que le meneur de jeu pourra traduire en par exemple conduite de véhicules terrestres particuliers, conduite de véhicules terrestres de transport, conduite de véhicules marins de faible tonnage, conduite d'aéronefs à hélices, conduite d'astronefs individuels (ou petit ou moyen ou grand etc.).",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "cybernétique",
+        "description": "La cybernétique permet la conception et la greffe de prothèses électroniques se substituant aux organes vivants. ",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "médecine",
+        "description": "Cette compétence permet le soin essentiellement de maladies. Elle permet le diagnostique, l'élaboration d'un traitement et sa mise en place.",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "miniaturisation",
+        "description": "Cette compétence est la recherche et la mise en application de la réduction du volume d'un objet technique.",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "pharmacologie",
+        "description": "La pharmacologie est un terme générique concernant la création, la transformation et la préparation de substances ayant un effet sur le corps. Ces effets peuvent être bénéfiques ou non.",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "réalisation navale",
+        "description": "Cette compétence spéciale permet la réalisation de tous les types de véhicules et pas seulement des vaisseaux spatiaux. Le lieu et l'époque où cette compétence sera utilisée fixera les limites de la réalisation.",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "robotique",
+        "description": "Cette compétence rassemble les savoir nécessaires à la conception et à la réalisation de robots. Il faut noter que tous les robots auxquels vous pouvez penser peuvent être fait à l'aide de cette compétence. Si des effets plus particuliers entre en jeu (armes, protection, mode de déplacement...) cette compétence permet de les compenser.  Le système de commande doit être décrit précisément. Plus la description est précise et plus il sera aisé de comprendre le lien entre l'utilisateur et le robot. ",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "théorie des boucliers",
+        "description": "Cette théoriesert à créer des boucliers énergétiques pour protéger des personnes ou des objets. Elle ne nécessite qu'une seule caractéristique qui correspond à sa \"force\". Le meneur de jeu peut augmenter le coût d'un tel objet si la personne ou l'objet à protéger est vraiment grand. Le bouclier empêche l'utilisation des armes contre lesquelles il protège. ",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    },
+    {
+        "name": "théorie des exosquelettes",
+        "description": "Cette théorie permet la fabrication de \"combinaisons\" se substituant aux capacités physiques du personnage. Pour simuler la résistance de l'exosquelette, il faudra créer une caractéristique \"Résistance\".",
+        "domaines": [
+            "sciences et techniques"
+        ],
+        "category": "general"
+    }
+]
