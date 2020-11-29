@@ -1,11 +1,13 @@
 from flask import Response, request
 from flasgger import validate
 from flask_jwt_extended import create_access_token
+from flask_bcrypt import generate_password_hash
 
 from database.models import User
 from flask_restful import Resource
 from json import dumps
 import datetime
+import os
 
 from utils.errors import schema_error, user_schema_validation
 
@@ -46,9 +48,10 @@ class SignupApi(Resource):
                 schema:
                     $ref: '#/definitions/error'
         """
+        swagger_path = f"{os.getcwd()}/swagger/signup.yml"
         validate(request.json,
                  "user",
-                 "../swagger/signup.yml",
+                 swagger_path,
                  validation_error_handler=schema_error,
                  validation_function=user_schema_validation
                  )
@@ -87,9 +90,10 @@ class LoginApi(Resource):
                             type: string
 
         """
+        swagger_path = f"{os.getcwd()}/swagger/signup.yml"
         validate(request.json,
                  "user",
-                 "../swagger/signup.yml",
+                 swagger_path,
                  validation_error_handler=schema_error,
                  validation_function=user_schema_validation)
         body = request.get_json()
@@ -101,3 +105,22 @@ class LoginApi(Resource):
         expires = datetime.timedelta(days=1)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
         return Response(dumps({'token': access_token}), mimetype="application/json", status=200)
+
+
+def initialize_users():
+    users = [{"email": "player@test.com",
+              "password": generate_password_hash("player123").decode('utf8'),
+              "role": "Player"},
+             {"email": "writer@test.com",
+              "password": generate_password_hash("writer123").decode('utf8'),
+              "role": "Writer"}
+             ]
+    try:
+        for user in users:
+            try:
+                if User.objects.get(email=user["email"]):
+                    User(email=user["email"]).update(password=user["password"], upsert=True)
+            except Exception:
+                User(**user).update(**user, upsert=True)
+    except Exception:
+        print("User initit fail")

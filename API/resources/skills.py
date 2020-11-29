@@ -5,6 +5,7 @@ from json import load, dumps
 
 from mongoengine.errors import DoesNotExist
 from database.models import Skill, User
+from database.db import update_payload
 
 
 class SkillApi(Resource):
@@ -73,6 +74,7 @@ class SkillApi(Resource):
             req = request.get_json()
             if "name" in req:
                 req.pop("name")
+            req = update_payload(req)
             skill.update(**req)
             return Response(dumps({"name": name, "message": "Skill updated"}), mimetype="application/json", status=200)
         else:

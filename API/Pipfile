@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+
+[dev-packages]
+
+[packages]
+flasgger = "*"
+Flask = "*"
+Flask-Bcrypt = "*"
+Flask-JWT-Extended = "*"
+flask-mongoengine = "*"
+Flask-RESTful = "*"
+Flask-WTF = "*"
+mongoengine = "*"
+pycparser = "*"
+PyJWT = "*"
+pymongo = "*"
+pyrsistent = "*"
+python-dotenv = "*"
+waitress = "*"
+
+[requires]
+python_version = "3.8"

@@ -1,5 +1,6 @@
 from .db import db
 from flask_bcrypt import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 class Skill(db.Document):
@@ -14,6 +15,8 @@ class Skill(db.Document):
                                                     "don"]), required=True)
     description = db.StringField(required=True)
     category = db.StringField(choices=["general", "specialisation", "don", "passion"], required=True)
+    creation_date = db.DateTimeField(default=datetime.utcnow)
+    update_date = db.DateTimeField(default=datetime.utcnow)
     optional_mechanism = db.DynamicField()
 
 
@@ -21,6 +24,8 @@ class User(db.Document):
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True, min_length=6)
     role = db.StringField(choices=("Admin", "GM", "Player", "Writer"), default="Player")
+    creation_date = db.DateTimeField(default=datetime.utcnow)
+    update_date = db.DateTimeField(default=datetime.utcnow)
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -35,12 +40,16 @@ class Culture(db.Document):
     gabarit = db.IntField(required=True)
     innate = db.ListField(db.StringField(), required=True)
     gift = db.ListField(db.StringField())
+    creation_date = db.DateTimeField(default=datetime.utcnow)
+    update_date = db.DateTimeField(default=datetime.utcnow)
 
 
 class Childhood(db.Document):
     name = db.StringField(required=True, primary_key=True)
     description = db.StringField(required=True)
     innate = db.ListField(db.StringField(), required=True)
+    creation_date = db.DateTimeField(default=datetime.utcnow)
+    update_date = db.DateTimeField(default=datetime.utcnow)
 
 
 class Career(db.Document):
@@ -49,6 +58,8 @@ class Career(db.Document):
     skills = db.ListField(db.StringField(), required=True)
     domaine = db.StringField(required=True)
     dotation = db.ListField(db.StringField())
+    creation_date = db.DateTimeField(default=datetime.utcnow)
+    update_date = db.DateTimeField(default=datetime.utcnow)
 
 
 class Character(db.Document):

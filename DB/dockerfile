@@ -1,0 +1,22 @@
+FROM mongo:4.0.3
+
+RUN mkdir /home/mongodb
+
+VOLUME db_data:/data/db
+VOLUME db_home:/home/mongodb
+VOLUME logs:/var/log/mongodb
+
+RUN touch /home/mongodb/.dbshell
+RUN chown -R 999:999 /home/mongodb
+
+
+ENV MONGO_INITDB_ROOT_USERNAME admin-user
+ENV MONGO_INITDB_ROOT_PASSWORD admin-password
+ENV MONGO_INITDB_DATABASE admin
+
+
+
+ADD mongo-init.js /docker-entrypoint-initdb.d/
+
+
+EXPOSE 27017

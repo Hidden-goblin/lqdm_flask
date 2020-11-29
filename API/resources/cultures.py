@@ -1,9 +1,8 @@
-from flask import Response, request
+from flask import Response
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from json import load, dumps
+from json import load
 
-from database.models import Culture, User
+from database.models import Culture
 
 
 class CultureApi(Resource):
