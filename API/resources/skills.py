@@ -1,11 +1,14 @@
 from flask import Response, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from json import load, dumps
+from json import load, dumps, loads
 
 from mongoengine.errors import DoesNotExist
 from database.models import Skill, User
 from database.db import update_payload
+from database.utilities import id_to_name
+
+from math import ceil
 
 
 class SkillApi(Resource):
@@ -88,6 +91,15 @@ class SkillsApi(Resource):
         ---
         tags:
             - skills
+        parameters:
+            - name: page
+              in: query
+              required: false
+              type: integer
+            - name: per_page
+              in: query
+              required: false
+              type: integer
         definitions:
             skills:
                 type: array
@@ -113,9 +125,21 @@ class SkillsApi(Resource):
                         required: true
                     optional_category:
                         type: object
+                    creation_date:
+                        $ref: '#/definitions/date'
+                        required: true
+                    update_date:
+                        $ref: '#/definitions/date'
+                        required: true
             domaine:
                 type: string
                 enum: ["basique", "arts et artisanats", "sciences du combat", "developpement corporel", "sciences et humanités", "occulte et religions", "sciences et techniques", "don"]
+            date:
+                type: object
+                properties:
+                    $date:
+                        type: integer
+                        comment: date timestamp rounded to the millisecond
         responses:
             200:
                 descriptions: "The full list of skills"
@@ -123,8 +147,21 @@ class SkillsApi(Resource):
                     $ref: '#/definitions/skills'
 
         """
-        query = Skill.objects.to_json()
-        return Response(query, mimetype="application/json", status=200)
+        page = int(request.args.get('page'))
+        per_page = int(request.args.get('per_page'))
+        max = Skill.objects.count()
+        if page is not None and per_page is not None:
+            if ceil(max / per_page) <= page:
+                query = Skill.objects[(page - 1) * per_page: page * per_page]
+                return Response(query.to_json(), mimetype="application/json", status=200)
+            else:
+                query = Skill.objects[max - per_page:]
+                return Response(query.to_json(), mimetype="application/json", status=200)
+        else:
+            query = Skill.objects.to_json()
+            query = id_to_name(loads(query))
+            query = dumps(query)
+            return Response(query, mimetype="application/json", status=200)
 
     @jwt_required
     def post(self):
@@ -154,4 +191,5 @@ def initialize_skills():
         add = list()
         for skill in skills:
             print(skill["name"])
+            skill = update_payload(skill, True)
             Skill(**skill).update(**skill, upsert=True)

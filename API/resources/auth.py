@@ -1,6 +1,6 @@
 from flask import Response, request
 from flasgger import validate
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import generate_password_hash
 
 from database.models import User
@@ -105,6 +105,13 @@ class LoginApi(Resource):
         expires = datetime.timedelta(days=1)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
         return Response(dumps({'token': access_token}), mimetype="application/json", status=200)
+
+
+class UserApi(Resource):
+    @jwt_required
+    def get(self, user_id):
+
+        pass
 
 
 def initialize_users():

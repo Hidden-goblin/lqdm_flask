@@ -15,8 +15,8 @@ class Skill(db.Document):
                                                     "don"]), required=True)
     description = db.StringField(required=True)
     category = db.StringField(choices=["general", "specialisation", "don", "passion"], required=True)
-    creation_date = db.DateTimeField(default=datetime.utcnow)
-    update_date = db.DateTimeField(default=datetime.utcnow)
+    creation_date = db.DateTimeField(default=datetime.utcnow, db_field="creation_date")
+    update_date = db.DateTimeField(default=datetime.utcnow, db_field="update_date")
     optional_mechanism = db.DynamicField()
 
 

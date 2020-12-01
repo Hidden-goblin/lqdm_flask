@@ -3,6 +3,7 @@ from flask_restful import Resource
 from json import load
 
 from database.models import Culture
+from database.db import update_payload
 
 
 class CultureApi(Resource):
@@ -24,4 +25,5 @@ def initialize_cultures():
         cultures = load(file)
         for culture in cultures:
             print(culture["name"])
+            culture = update_payload(culture, True)
             Culture(**culture).update(**culture, upsert=True)

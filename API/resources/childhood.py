@@ -4,6 +4,7 @@ from flask import Response
 from flask_restful import Resource
 
 from database.models import Childhood
+from database.db import update_payload
 
 
 class ChildhoodAPI(Resource):
@@ -80,4 +81,5 @@ def initialize_childhood():
         childhoods = load(file)
         for childhood in childhoods:
             print(childhood["name"])
+            childhood = update_payload(childhood, True)
             Childhood(**childhood).update(**childhood, upsert=True)

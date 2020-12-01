@@ -5,7 +5,7 @@ from .auth import SignupApi, LoginApi
 
 def initialize_routes(api):
     api.add_resource(SkillsApi, "/api/skills")
-    api.add_resource(SkillApi, "/api/skill/<string:name>")
+    api.add_resource(SkillApi, "/api/skills/<string:name>")
 
     api.add_resource(SignupApi, '/api/auth/signup')
     api.add_resource(LoginApi, '/api/auth/login')
