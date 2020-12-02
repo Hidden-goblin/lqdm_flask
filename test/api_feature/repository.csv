@@ -1,0 +1,7 @@
+"Step","Definition","Location", "Comments"
+"Given","I am "{user_name}"", "pre_requisite.py", "Look into user resources"
+"Given","I am authenticated", "pre_requisite.py", "Perform the sign in operation and store the JWT"
+"When", "I list users", "actions.py", "Perform the list user call"
+"Then", "I get "{status_code}" http status code", "post_conditions.py", "Check the http status code"
+"Then", "The error message is "{message}"", "post_conditions.py", "Validate the error message returned by the API"
+"Then", "At least "{number}" users", "post_conditions.py", "Should validate the number of element with the type 'user'"
