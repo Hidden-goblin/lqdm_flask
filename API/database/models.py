@@ -3,6 +3,16 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from datetime import datetime
 
 
+class Session(db.Document):
+    logged = db.DateTimeField(default=datetime.utcnow)
+    user_hash = db.StringField(required=True)
+    meta = {
+        'indexes': [
+            {'fields': ['logged'], 'expireAfterSeconds': 120}
+        ]
+    }
+
+
 class Skill(db.Document):
     name = db.StringField(required=True, primary_key=True)
     domaines = db.ListField(db.StringField(choices=["basique",

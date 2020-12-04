@@ -8,7 +8,8 @@ from database.models import Skill, User
 from database.db import update_payload
 from database.utilities import id_to_name
 
-from math import ceil
+
+from utils.middle import paginate
 
 
 class SkillApi(Resource):
@@ -147,21 +148,12 @@ class SkillsApi(Resource):
                     $ref: '#/definitions/skills'
 
         """
-        page = int(request.args.get('page'))
-        per_page = int(request.args.get('per_page'))
-        max = Skill.objects.count()
-        if page is not None and per_page is not None:
-            if ceil(max / per_page) <= page:
-                query = Skill.objects[(page - 1) * per_page: page * per_page]
-                return Response(query.to_json(), mimetype="application/json", status=200)
-            else:
-                query = Skill.objects[max - per_page:]
-                return Response(query.to_json(), mimetype="application/json", status=200)
-        else:
-            query = Skill.objects.to_json()
-            query = id_to_name(loads(query))
-            query = dumps(query)
-            return Response(query, mimetype="application/json", status=200)
+        page = int(request.args.get('page')) if request.args.get('page') is not None else None
+        per_page = int(request.args.get('per_page')) if request.args.get('per_page') is not None else None
+        query = paginate(page, per_page, Skill)
+        query = id_to_name(query)
+        query = dumps(query)
+        return Response(query, mimetype="application/json", status=200)
 
     @jwt_required
     def post(self):
@@ -173,6 +165,10 @@ class SkillsApi(Resource):
         security:
             - BearerAuth: []
         parameters:
+            - name: Authorization
+              in: header
+              type: string
+              description: "'Bearer JWT' value"
             - name: body
               in: body
               schema:
