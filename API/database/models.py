@@ -14,7 +14,8 @@ class Session(db.Document):
 
 
 class Skill(db.Document):
-    name = db.StringField(required=True, primary_key=True)
+    name = db.StringField(required=True)
+    uni_name = db.StringField(required=True, primary_key=True)
     domaines = db.ListField(db.StringField(choices=["basique",
                                                     "arts et artisanats",
                                                     "sciences du combat",

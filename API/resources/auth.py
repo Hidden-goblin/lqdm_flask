@@ -2,7 +2,9 @@ from flask import Response, request
 from flasgger import validate
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt_claims
 from flask_bcrypt import generate_password_hash
+from mongoengine import DoesNotExist, MultipleObjectsReturned
 
+from database.db import update_payload
 from database.models import User, Session
 from flask_restful import Resource
 from json import dumps
@@ -12,6 +14,7 @@ import uuid
 from logging import getLogger
 
 from utils.errors import schema_error, user_schema_validation
+from utils.middle import is_access_granted, error_message
 
 log = getLogger(__name__)
 
@@ -157,16 +160,95 @@ class UserApi(Resource):
                     update_date:
                         $ref: '#/definitions/date'
                         required: true
+        responses:
+            200:
+                schema:
+                    $ref: '#/definitions/account'
         """
-        print(f"user_id {user_id}")
-        user_uuid = get_jwt_claims()["hash"]
-        log.warning(f"user uuid {user_uuid}")
-        user_session = Session.objects(user_hash=user_uuid)
-        log.warning(f"user session {user_session}")
+        user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
         if user_session:
-            return Response(dumps({"message": "toto"}), 200)
+            try:
+                return Response(User.objects.get(email=user_id).to_json(use_db_field=False),
+                                mimetype="application/json", status=200)
+            except DoesNotExist as done:
+                return error_message(done.args, 404)
+            except MultipleObjectsReturned as mor:
+                return error_message(mor.args, 404)
         else:
-            return Response(dumps({"message": "titi"}), 200)
+            return error_message("Your are not allowed to access this resource", status_code)
+
+    @jwt_required
+    def put(self, user_id):
+        """
+        Update a specific user.
+        ---
+        tags:
+            - users
+        security:
+            - BearerAuth: []
+        definitions:
+            dateless_account:
+                type: object
+                properties:
+                    email:
+                        type: string
+                        format: email
+                        required: true
+                    password:
+                        type: string
+                        format: password
+                        required: true
+                    role:
+                        type: string
+                        required: true
+                        enum: ["Admin", "GM", "Player", "Writer"]
+        parameters:
+            - name: Authorization
+              in: header
+              type: string
+              description: "'Bearer JWT' value"
+            - name: user_id
+              in: path
+              required: true
+              type: string
+            - name: body
+              in: body
+              schema:
+                $ref: '#/definitions/dateless_account'
+        responses:
+            200:
+                schema:
+                    $ref: '#/definitions/account'
+            401:
+                schema:
+                    $ref: '#/definitions/error'
+            403:
+                schema:
+                    $ref: '#/definitions/error'
+            404:
+                schema:
+                    $ref: '#/definitions/error'
+        """
+        user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
+        if user_session:
+            try:
+                user = User.objects.get(email=user_id)
+                req = request.get_json()
+                if "email" in req:
+                    req.pop("email")
+                req = update_payload(req)
+                user.update(**req)
+                return Response()
+            except DoesNotExist as done:
+                return error_message(done.args, 404)
+            except MultipleObjectsReturned as mor:
+                return error_message(mor.args, 404)
+        else:
+            return error_message("Your are not allowed to access this resource", status_code)
+
+    @jwt_required
+    def delete(self, user_id):
+        pass
 
 
 class UsersApi(Resource):
@@ -181,14 +263,26 @@ def initialize_users():
               "role": "Player"},
              {"email": "writer@test.com",
               "password": generate_password_hash("writer123").decode('utf8'),
-              "role": "Writer"}
+              "role": "Writer"},
+             {"email": "bobadmin@test.com",
+              "password": generate_password_hash("bob!123").decode('utf8'),
+              "role": "Admin"},
+             {"email": "elsawriter@pencil.edu",
+              "password": generate_password_hash("elsa!123").decode('utf8'),
+              "role": "Writer"},
+             {"email": "robinplayer@test.com",
+              "password": generate_password_hash("robin!123").decode('utf8'),
+              "role": "Player"}
              ]
     try:
         for user in users:
+            log.warning(f"process {user['email']} user")
             try:
-                if User.objects.get(email=user["email"]):
-                    User(email=user["email"]).update(password=user["password"], upsert=True)
-            except Exception:
+                db_user = User.objects.get(email=user["email"])
+                db_user.update(password=user["password"], upsert=True)
+                db_user.save()
+            except Exception as exception_one:
+                log.error(f"Exception when updating user\n {exception_one}")
                 User(**user).update(**user, upsert=True)
-    except Exception:
-        print("User initit fail")
+    except Exception as exception_tow:
+        log.error(f"User init fail\n {exception_tow}")

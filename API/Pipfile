@@ -21,6 +21,7 @@ pymongo = "*"
 pyrsistent = "*"
 python-dotenv = "*"
 waitress = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.8"

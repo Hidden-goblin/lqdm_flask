@@ -30,3 +30,4 @@ six==1.15.0
 waitress==1.4.4
 Werkzeug==1.0.1
 WTForms==2.3.3
+unidecode==1.1.1

@@ -1,12 +1,14 @@
+import unidecode
 from flask import Response, request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt_claims
 from json import load, dumps, loads
+from utils.middle import is_access_granted, error_message
 
 from mongoengine.errors import DoesNotExist
 from database.models import Skill, User
 from database.db import update_payload
-from database.utilities import id_to_name
+from database.utilities import db_key_to_field_name
 
 
 from utils.middle import paginate
@@ -69,20 +71,52 @@ class SkillApi(Resource):
             - name: body
               in: body
               schema:
-                $ref: '#/definitions/skill'
+                $ref: '#/definitions/dateless_skill'
+        definitions:
+            dateless_skill:
+                type: object
+                properties:
+                    name:
+                        type: string
+                        required: true
+                    uni_name:
+                        type: string
+                        required: false
+                        description: 'the unaccented name. It will be the base name'
+                    domaines:
+                        type: array
+                        required: true
+                        items:
+                            $ref: '#/definitions/domaine'
+                    description:
+                        type: string
+                        required: true
+                    category:
+                        type: string
+                        enum: ["general", "specialisation", "don"]
+                        required: true
+                    optional_category:
+                        type: object
         """
-        user_id = get_jwt_identity()
-        user = User.objects.get(id=user_id)
-        if user.role == "Writer":
-            skill = Skill.objects.get(name=name)
-            req = request.get_json()
-            if "name" in req:
-                req.pop("name")
-            req = update_payload(req)
-            skill.update(**req)
-            return Response(dumps({"name": name, "message": "Skill updated"}), mimetype="application/json", status=200)
-        else:
-            return Response(dumps({"name": name, "message": "Update forbidden"}), mimetype="application/json", status=400)
+        try:
+            access, status = is_access_granted(get_jwt_identity(), get_jwt_claims(), level=["Writer"])
+            if access:
+                skill = Skill.objects.get(uni_name=name)
+                req = request.get_json()
+                if "uni_name" in req:
+                    req.pop("uni_name")
+                req = update_payload(req)
+                skill.update(**req)
+                return Response(dumps({"name": name, "message": "Skill updated"}),
+                                mimetype="application/json",
+                                status=200)
+            else:
+                return Response(dumps({"name": name,
+                                       "message": "Update forbidden"}),
+                                mimetype="application/json",
+                                status=status)
+        except DoesNotExist as done:
+            return error_message("Skill to update not found", 404)
 
 
 class SkillsApi(Resource):
@@ -112,6 +146,10 @@ class SkillsApi(Resource):
                     name:
                         type: string
                         required: true
+                    uni_name:
+                        type: string
+                        required: false
+                        description: 'the unaccented name. It will be the base name'
                     domaines:
                         type: array
                         required: true
@@ -150,8 +188,8 @@ class SkillsApi(Resource):
         """
         page = int(request.args.get('page')) if request.args.get('page') is not None else None
         per_page = int(request.args.get('per_page')) if request.args.get('per_page') is not None else None
-        query = paginate(page, per_page, Skill)
-        query = id_to_name(query)
+        query = paginate(page, per_page, Skill, "+uni_name")
+        query = db_key_to_field_name(query, "uni_name")
         query = dumps(query)
         return Response(query, mimetype="application/json", status=200)
 
@@ -182,10 +220,13 @@ class SkillsApi(Resource):
 
 
 def initialize_skills():
+    if Skill.objects().count():
+        Skill.drop_collection()
     with open("skills.json") as file:
         skills = load(file)
         add = list()
         for skill in skills:
             print(skill["name"])
+            skill["uni_name"] = unidecode.unidecode(skill["name"])
             skill = update_payload(skill, True)
             Skill(**skill).update(**skill, upsert=True)
