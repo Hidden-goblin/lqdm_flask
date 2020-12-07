@@ -44,6 +44,10 @@ class User(db.Document):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    @staticmethod
+    def get_roles():
+        return "Admin", "GM", "Player", "Writer"
+
 
 class Culture(db.Document):
     name = db.StringField(required=True, primary_key=True)

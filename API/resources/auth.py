@@ -119,6 +119,54 @@ class LoginApi(Resource):
         return Response(dumps({'token': access_token}), mimetype="application/json", status=200)
 
 
+class LogoutApi(Resource):
+    @jwt_required
+    def post(self):
+        """
+        Log into the app by requesting a JWT
+        ---
+        tags:
+            - users
+        security:
+            - BearerAuth: []
+        parameters:
+            - name: Authorization
+              in: header
+              type: string
+              description: "'Bearer JWT' value"
+        parameters:
+            - name: body
+              in: body
+              schema:
+                type: object
+                properties:
+                    email:
+                        type: string
+                        example: 'user@lqdm.com'
+        responses:
+            401:
+                schema:
+                    $ref: '#/definitions/error'
+                example: {"message": "Cannot terminate the session"}
+            400:
+                schema:
+                    $ref: '#/definitions/error'
+                example: {"message": "Cannot terminate the session"}
+            200:
+                schema:
+                    $ref: '#/definitions/error'
+                example: {"message": "Session ended"}
+        """
+        body = request.get_json()
+        user = User.objects.get(email=body.get("email"))
+        session, error = is_access_granted(get_jwt_identity(), get_jwt_claims(), User.get_roles())
+        if session and user.email == User.objects.get(id=get_jwt_identity()):
+            Session.objects.delete(user_hash=get_jwt_claims()["hash"])
+            return error_message("Session ended", 200)
+        else:
+            return error_message("Cannot terminate the session", error)
+
+
 class UserApi(Resource):
     @jwt_required
     def get(self, user_id):
@@ -248,7 +296,54 @@ class UserApi(Resource):
 
     @jwt_required
     def delete(self, user_id):
-        pass
+        """
+        Delete a specific user. Could be self.
+        ---
+        tags:
+            - users
+        security:
+            - BearerAuth: []
+        parameters:
+            - name: Authorization
+              in: header
+              type: string
+              description: "'Bearer JWT' value"
+            - name: user_id
+              in: path
+              required: true
+              type: string
+        responses:
+            204:
+                description: "The user has been successfully deleted"
+            401:
+                schema:
+                    $ref: '#/definitions/error'
+            403:
+                schema:
+                    $ref: '#/definitions/error'
+            404:
+                schema:
+                    $ref: '#/definitions/error'
+        """
+        user = User.objects.get(email=user_id)
+        if user == User.objects.get(id=get_jwt_identity()):
+            user_session, status_code = is_access_granted(get_jwt_identity(),
+                                                          get_jwt_claims(),
+                                                          (user.role,))
+            if user_session:
+                user.delete()
+                return Response(status=204)
+            else:
+                return error_message("Cannot delete account", status_code=status_code)
+        else:
+            user_session, status_code = is_access_granted(get_jwt_identity(),
+                                                          get_jwt_claims(),
+                                                          ('Admin',))
+            if user_session:
+                user.delete()
+                return Response(status=204)
+            else:
+                return error_message("Cannot delete account", status_code)
 
 
 class UsersApi(Resource):
