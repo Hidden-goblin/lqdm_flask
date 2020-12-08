@@ -1,0 +1,18 @@
+{
+  "users": {
+    "JohnDoe": {
+      "email": "johndoe@test.com",
+      "password": ""
+    },
+    "ElsaWriter": {
+      "email": "elsawriter@pencil.edu",
+      "password": "elsa!123",
+      "role": "Writer"
+    },
+    "BobAdmin": {
+      "email": "bobadmin@test.com",
+      "password": "bob!123",
+      "role": "Admin"
+    }
+  }
+}

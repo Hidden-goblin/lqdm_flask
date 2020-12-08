@@ -7,6 +7,9 @@ verify_ssl = true
 
 [packages]
 requests = "*"
+behave = "*"
+behave-html-formatter = "*"
+dpath = "*"
 
 [requires]
 python_version = "3.8"

@@ -13,6 +13,10 @@ class LqdmAPI(ApiAbstraction):
                    "password": password}
 
         response = requests.post(url=endpoint, json=payload)
+
+        if response.status_code == 200:
+            self.__token = response.json()["token"]
+
         if is_recorded:
             self.history = response
 
@@ -63,7 +67,75 @@ class LqdmAPI(ApiAbstraction):
         if email is not None:
             endpoint = f"{self.url}/v1/api/users/{email}"
 
-            response = requests.get(url=endpoint, headers= self.__generate_header())
+            response = requests.get(url=endpoint, headers=self.__generate_header())
+        else:
+            endpoint = f"{self.url}/v1/api/users"
+            params = {
+                "page": page,
+                "per_page": per_page
+            }
+            response = requests.get(url=endpoint, params=params, headers=self.__generate_header())
+
+        if is_recorded:
+            self.history = response
+
+        return response
+
+    def skills(self, name: str = None, page: int = None, per_page: int = None, is_recorded: bool = True):
+        if name is not None:
+            endpoint = f"{self.url}/v1/api/skills/{name}"
+
+            response = requests.get(url=endpoint, headers=self.__generate_header())
+        else:
+            endpoint = f"{self.url}/v1/api/skills"
+            params = {
+                "page": page,
+                "per_page": per_page
+            }
+            response = requests.get(url=endpoint, params=params, headers=self.__generate_header())
+
+        if is_recorded:
+            self.history = response
+
+        return response
+
+    def create_skill(self, skill: dict = None, is_recorded: bool = True):
+        endpoint = f"{self.url}/v1/api/skills"
+        response = requests.post(endpoint, json=skill, headers=self.__generate_header())
+
+        if is_recorded:
+            self.history = response
+
+        return response
+
+    def update_skill(self, skill_name: str = None, skill: dict = None, is_recorded: bool = True):
+        if skill_name is not None:
+            endpoint = f"{self.url}/v1/api/skills/{skill_name}"
+        else:
+            endpoint = f"{self.url}/v1/api/skills"
+
+        response = requests.put(endpoint, json=skill, headers=self.__generate_header())
+
+        if is_recorded:
+            self.history = response
+
+        return response
+
+    def delete_skill(self, skill_name: str = None, is_recorded: bool = True):
+        if skill_name is not None:
+            endpoint = f"{self.url}/v1/api/skills/{skill_name}"
+        else:
+            endpoint = f"{self.url}/v1/api/skills"
+
+        response = requests.delete(endpoint, headers=self.__generate_header())
+
+        if is_recorded:
+            self.history = response
+
+        return response
 
     def __generate_header(self):
-        return {"Authorization": f"Bearer {self.__token}"}
+        if self.__token is not None:
+            return {"Authorization": f"Bearer {self.__token}"}
+        else:
+            return dict()

@@ -186,8 +186,9 @@ class SkillsApi(Resource):
                     $ref: '#/definitions/skills'
 
         """
-        page = int(request.args.get('page')) if request.args.get('page') is not None else None
-        per_page = int(request.args.get('per_page')) if request.args.get('per_page') is not None else None
+        # TODO check this. Please mind that 0 is a falsy value
+        page = int(request.args.get('page')) if request.args.get('page') else None
+        per_page = int(request.args.get('per_page')) if request.args.get('per_page') else None
         query = paginate(page, per_page, Skill, "+uni_name")
         query = db_key_to_field_name(query, "uni_name")
         query = dumps(query)
