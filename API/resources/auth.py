@@ -349,17 +349,39 @@ class UserApi(Resource):
 class UsersApi(Resource):
     @jwt_required
     def get(self):
-        pass
+        """
+        Retrieve a specific user.
+        ---
+        tags:
+            - users
+        security:
+            - BearerAuth: []
+        parameters:
+            - name: Authorization
+              in: header
+              type: string
+              description: "'Bearer JWT' value"
+        responses:
+            200:
+                type: array
+                items:
+                    $ref: '#/definitions/account'
+        """
+        user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
+        if user_session:
+            try:
+                return Response(User.objects.to_json(),
+                                mimetype="application/json", status=200)
+            except DoesNotExist as done:
+                return error_message(done.args, 404)
+            except MultipleObjectsReturned as mor:
+                return error_message(mor.args, 404)
+        else:
+            return error_message("Your are not allowed to access this resource", status_code)
 
 
 def initialize_users():
-    users = [{"email": "player@test.com",
-              "password": generate_password_hash("player123").decode('utf8'),
-              "role": "Player"},
-             {"email": "writer@test.com",
-              "password": generate_password_hash("writer123").decode('utf8'),
-              "role": "Writer"},
-             {"email": "bobadmin@test.com",
+    users = [{"email": "bobadmin@test.com",
               "password": generate_password_hash("bob!123").decode('utf8'),
               "role": "Admin"},
              {"email": "elsawriter@pencil.edu",
@@ -369,6 +391,7 @@ def initialize_users():
               "password": generate_password_hash("robin!123").decode('utf8'),
               "role": "Player"}
              ]
+    User.drop_collection()
     try:
         for user in users:
             log.warning(f"process {user['email']} user")

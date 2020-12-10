@@ -1,6 +1,7 @@
 # -*- coding:utf8 -*-
 import base64
 
+
 def common_exception(context, exception):
     """
     To be used in the 'except' clause of step definition.

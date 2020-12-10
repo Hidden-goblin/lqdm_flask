@@ -13,6 +13,17 @@
       "email": "bobadmin@test.com",
       "password": "bob!123",
       "role": "Admin"
+    },
+    "RobinUser": {
+      "email": "robinplayer@test.com",
+      "password": "robin!123",
+      "role": "Player"
+    },
+    "AlbusUser": {
+      "email": "albusplayer@test.com",
+      "password": "albus!123",
+      "role": "Player",
+      "is_temporary": true
     }
   }
 }

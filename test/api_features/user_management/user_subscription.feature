@@ -7,8 +7,8 @@ Feature: User subscription
     Given I am "RobinUser"
     And I forgive "<field>" field
     When I subscribe
-    Then I receive "<message>" message
-    And I get "<status>" http status code
+    Then I get "<status>" http status code
+    And I receive "<message>" message
 
     Examples: Missing mandatory
       | field    | message                 | status |

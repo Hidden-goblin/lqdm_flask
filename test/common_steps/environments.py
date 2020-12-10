@@ -59,47 +59,56 @@ def folder_file_name_cleaning(name: str) -> str:
 
 def create_evidence(scenario, history):
     """Build the evidence file for the 'scenario' and the 'history' of actions"""
-    evidence_folder = f"evidence/{folder_file_name_cleaning(scenario.feature.name)}"
-    log.debug(f"evidence folder {evidence_folder}")
-    os.makedirs(evidence_folder, exist_ok=True)
-    sc_name = folder_file_name_cleaning(str(scenario.name))
+    try:
+        evidence_folder = f"evidence/{folder_file_name_cleaning(scenario.feature.name)}"
+        log.debug(f"evidence folder {evidence_folder}")
+        os.makedirs(evidence_folder, exist_ok=True)
+        sc_name = folder_file_name_cleaning(str(scenario.name))
 
-    with open(f"{evidence_folder}/{sc_name}-{scenario.status}.txt",
-              "w", encoding="utf-8") as file:
-        # Evidence title and status
-        file.write(f"Evidence for scenario {scenario.name}\n\n")
-        file.write(f"Scenario {scenario.status}\n\n")
-        # Add the skip reason
-        # TODO add the failure reason??
-        if scenario.status is not Status.passed:
-            file.write(f"\t Reason: {scenario.skip_reason}\n\n")
+        with open(f"{evidence_folder}/{sc_name}-{scenario.status}.txt",
+                  "w", encoding="utf-8") as file:
+            # Evidence title and status
+            file.write(f"Evidence for scenario {scenario.name}\n\n")
+            file.write(f"Scenario {scenario.status}\n\n")
+            # Add the skip reason
+            # TODO add the failure reason??
+            if scenario.status is not Status.passed:
+                file.write(f"\t Reason: {scenario.skip_reason}\n\n")
 
-        # Evidence history writing
-        for event in history:
-            # Event is composed of 'step' object and object
-            # Write the 'step' data. This is retrieved from feature files
-            file.write(f"{event[0].keyword} {event[0].name}\n")
-            # Write the data related to the step
-            if isinstance(event[1], list):
-                for req in event[1]:
-                    response_to_evidence(file, req)
-            else:
-                response_to_evidence(file, event[1])
+            # Evidence history writing
+            for event in history:
+                log.debug(f"Computing : {event}")
+                # Event is composed of 'step' object and object
+                # Write the 'step' data. This is retrieved from feature files
+                file.write(f"{event[0].keyword} {event[0].name}\n")
+                # Write the data related to the step
+                if isinstance(event[1], list):
+                    for req in event[1]:
+                        response_to_evidence(file, req)
+                else:
+                    response_to_evidence(file, event[1])
+    except Exception as exception:
+        log.error(exception)
+        raise Exception from exception
 
 
 def request_response_to_evidence(file, response):
-    file.write(f"Request:\n \t Method: {response.request.method}")
-    file.write(f"\n\t Url: {response.request.url}")
-    file.write(f"\n\t Headers: {response.request.headers}")
-    if response.request.method == 'POST':
-        file.write(f"\n\t Body: {response.request.body}")
-    file.write(f"\n\n Response: \n\t Status: {response.status_code}")
-    file.write(f"\n\t Response Time: {response.elapsed.total_seconds()} second")
     try:
-        file.write(f"\n\t Content: \n {dumps(response.json(), indent=4)}")
-    except JSONDecodeError:
-        # TODO look if xml pretty print is needed here
-        file.write(f"\n\t Content: \n {response.text}")
+        file.write(f"Request:\n \t Method: {response.request.method}")
+        file.write(f"\n\t Url: {response.request.url}")
+        file.write(f"\n\t Headers: {response.request.headers}")
+        if response.request.method == 'POST':
+            file.write(f"\n\t Body: {response.request.body}")
+        file.write(f"\n\n Response: \n\t Status: {response.status_code}")
+        file.write(f"\n\t Response Time: {response.elapsed.total_seconds()} second")
+        try:
+            file.write(f"\n\t Content: \n {dumps(response.json(), indent=4)}")
+        except JSONDecodeError:
+            # TODO look if xml pretty print is needed here
+            file.write(f"\n\t Content: \n {response.text}")
+    except Exception as exception:
+        log.error(exception)
+        raise Exception from exception
 
 
 def response_to_evidence(file, response):
@@ -139,8 +148,8 @@ def make_evidence_rotation(max_keep: int):
             return f"{folder_name}{int(number) + 1}"
 
         if max_keep != 0:
-            folders = [f for f in os.listdir("")
-                       if os.path.isdir(os.path.join("", f))
+            folders = [f for f in os.listdir(".")
+                       if os.path.isdir(os.path.join(".", f))
                        and re.match(r"^evidence[0-9]+$", f)
                        and int(re.search("evidence([0-9]+)", f).groups()[0]) <= max_keep]
             folders.reverse()

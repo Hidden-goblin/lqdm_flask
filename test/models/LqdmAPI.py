@@ -7,6 +7,10 @@ class LqdmAPI(ApiAbstraction):
         ApiAbstraction.__init__(self, url)
         self.__token = None
 
+    def reset(self):
+        self.history_reset()
+        self.__token = None
+
     def login(self, email, password, is_recorded: bool = True):
         endpoint = f"{self.url}/v1/api/auth/login"
         payload = {"email": email,
@@ -18,7 +22,7 @@ class LqdmAPI(ApiAbstraction):
             self.__token = response.json()["token"]
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -29,17 +33,20 @@ class LqdmAPI(ApiAbstraction):
         response = requests.post(url=endpoint, json=payload, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
-    def sign_up(self, email, password, is_recorded: bool = True):
+    def sign_up(self, email: str = None, password: str = None, is_recorded: bool = True):
         endpoint = f"{self.url}/v1/api/auth/signup"
-        payload = {"email": email,
-                   "password": password}
+        payload = dict()
+        if email is not None:
+            payload["email"] = email
+        if password is not None:
+            payload["password"] = password
         response = requests.post(url=endpoint, json=payload)
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -49,7 +56,7 @@ class LqdmAPI(ApiAbstraction):
         response = requests.delete(url=endpoint, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -59,7 +66,7 @@ class LqdmAPI(ApiAbstraction):
         response = requests.put(url=endpoint, json=account, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -77,7 +84,7 @@ class LqdmAPI(ApiAbstraction):
             response = requests.get(url=endpoint, params=params, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -95,7 +102,7 @@ class LqdmAPI(ApiAbstraction):
             response = requests.get(url=endpoint, params=params, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -104,7 +111,7 @@ class LqdmAPI(ApiAbstraction):
         response = requests.post(endpoint, json=skill, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -117,7 +124,7 @@ class LqdmAPI(ApiAbstraction):
         response = requests.put(endpoint, json=skill, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
@@ -130,7 +137,7 @@ class LqdmAPI(ApiAbstraction):
         response = requests.delete(endpoint, headers=self.__generate_header())
 
         if is_recorded:
-            self.history = response
+            self.push_event(response)
 
         return response
 
