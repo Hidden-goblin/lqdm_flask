@@ -52,3 +52,20 @@ def forgive_data(context, field):
     except Exception as exception:
         context.model.push_event(f"Retrieve error : {exception}")
         raise AssertionError(exception)
+
+
+@Given(u'"{user_name}" exists')
+def check_user_existence(context, user_name):
+    try:
+        requested_user = context.data["users"][user_name]
+        admin = context.data["users"]["BobAdmin"]
+
+        context.model.login(email=admin["email"], password=admin["password"])
+        response = context.model.users(email=requested_user["email"])
+        if response.status_code != 200:
+            raise AssertionError(f"User {user_name} doesn't exist")
+
+        context.model.logout(email=admin["email"])
+    except Exception as exception:
+        context.model.push_event(f"Retrieve error : {exception}")
+        raise AssertionError(exception)

@@ -1,6 +1,7 @@
 from flask import Response, request
 from flasgger import validate
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt_claims
+from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt_claims, verify_jwt_in_request
+from flask_jwt_extended.exceptions import NoAuthorizationError
 from flask_bcrypt import generate_password_hash
 from mongoengine import DoesNotExist, MultipleObjectsReturned
 
@@ -57,19 +58,44 @@ class SignupApi(Resource):
                 schema:
                     $ref: '#/definitions/error'
         """
-        swagger_path = f"{os.getcwd()}/swagger/signup.yml"
-        validate(request.json,
-                 "user",
-                 swagger_path,
-                 validation_error_handler=schema_error,
-                 validation_function=user_schema_validation
-                 )
-        body = request.get_json()
-        user = User(**body)
-        user.hash_password()
-        user.save()
-        id = user.id
-        return Response({'id': str(id)}, mimetype="application/json", status=200)
+        try:
+            # swagger_path = f"{os.getcwd()}/swagger/signup.yml"
+            # validate(request.json,
+            #          "user",
+            #          swagger_path,
+            #          validation_error_handler=schema_error,
+            #          validation_function=user_schema_validation
+            #          )
+            body = request.get_json()
+            if len(body.keys()) > 2:
+                return error_message("expecting only email and password", 400)
+            elif len(body.keys()) < 2:
+                if "email" not in body:
+                    return error_message("email is mandatory", 400)
+                elif "password" not in body:
+                    return error_message("password is mandatory", 400)
+                else:
+                    pass
+            else:
+                if not all([item in body for item in ("email", "password")]):
+                    if "email" not in body:
+                        return error_message("email is mandatory", 400)
+                    elif "password" not in body:
+                        return error_message("password is mandatory", 400)
+                    else:
+                        pass
+            try:
+                search_duplicate = User.objects.get(email=body["email"])
+                return error_message("You cannot subscribe with this email", 400)
+            except DoesNotExist:
+                pass
+            user = User(**body)
+            user.hash_password()
+            user.save()
+            id = user.id
+            return Response(dumps({'id': str(id), "message": "subscription successful"}), mimetype="application/json", status=200)
+        except Exception as exception:
+            return error_message(exception.args, 500)
 
 
 class LoginApi(Resource):
@@ -120,7 +146,7 @@ class LoginApi(Resource):
 
 
 class LogoutApi(Resource):
-    @jwt_required
+
     def post(self):
         """
         Log into the app by requesting a JWT
@@ -157,6 +183,10 @@ class LogoutApi(Resource):
                     $ref: '#/definitions/error'
                 example: {"message": "Session ended"}
         """
+        try:
+            verify_jwt_in_request()
+        except NoAuthorizationError as no_auth:
+            return error_message("You are not logged in", 401)
         body = request.get_json()
         user = User.objects.get(email=body.get("email"))
         session, error = is_access_granted(get_jwt_identity(), get_jwt_claims(), User.get_roles())
@@ -168,7 +198,7 @@ class LogoutApi(Resource):
 
 
 class UserApi(Resource):
-    @jwt_required
+
     def get(self, user_id):
         """
         Retrieve a specific user.
@@ -213,6 +243,10 @@ class UserApi(Resource):
                 schema:
                     $ref: '#/definitions/account'
         """
+        try:
+            verify_jwt_in_request()
+        except NoAuthorizationError as no_auth:
+            return error_message("You don't have access to this resource.", 401)
         user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
         if user_session:
             try:
@@ -225,7 +259,6 @@ class UserApi(Resource):
         else:
             return error_message("Your are not allowed to access this resource", status_code)
 
-    @jwt_required
     def put(self, user_id):
         """
         Update a specific user.
@@ -277,6 +310,10 @@ class UserApi(Resource):
                 schema:
                     $ref: '#/definitions/error'
         """
+        try:
+            verify_jwt_in_request()
+        except NoAuthorizationError as no_auth:
+            return error_message("Authentication is needed", 401)
         user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
         if user_session:
             try:
@@ -294,7 +331,6 @@ class UserApi(Resource):
         else:
             return error_message("Your are not allowed to access this resource", status_code)
 
-    @jwt_required
     def delete(self, user_id):
         """
         Delete a specific user. Could be self.
@@ -325,6 +361,10 @@ class UserApi(Resource):
                 schema:
                     $ref: '#/definitions/error'
         """
+        try:
+            verify_jwt_in_request()
+        except NoAuthorizationError as no_auth:
+            return error_message("You don't have access to this resource.", 401)
         user = User.objects.get(email=user_id)
         if user == User.objects.get(id=get_jwt_identity()):
             user_session, status_code = is_access_granted(get_jwt_identity(),
@@ -347,7 +387,6 @@ class UserApi(Resource):
 
 
 class UsersApi(Resource):
-    @jwt_required
     def get(self):
         """
         Retrieve a specific user.
@@ -367,6 +406,10 @@ class UsersApi(Resource):
                 items:
                     $ref: '#/definitions/account'
         """
+        try:
+            verify_jwt_in_request()
+        except NoAuthorizationError as no_auth:
+            return error_message("You don't have access to this resource.", 401)
         user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
         if user_session:
             try:

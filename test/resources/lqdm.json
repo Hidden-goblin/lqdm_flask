@@ -24,6 +24,11 @@
       "password": "albus!123",
       "role": "Player",
       "is_temporary": true
+    },
+    "TwinRobinUser": {
+      "email": "robinplayer@test.com",
+      "password": "robin!123",
+      "role": "Player"
     }
   }
 }

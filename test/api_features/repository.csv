@@ -3,6 +3,7 @@
 "Given","I am authenticated", "pre_requisite.py", "Perform the sign in operation and store the JWT"
 "Given","I want to modify "{payload_key}" to "{value}"", "pre_requisite.py", "Add to pre_requisite the 'update' key with an extended dictionnary key:value"
 "Given","I forgive "<field>" field", "pre_requisite.py", "Remove field from the payload"
+"Given",""{user_name}" exists", "pre_requisite.py", "Check with API if the user exists"
 "When", "I subscribe", "actions.py", "sign up onto the app"
 "When", "I list users", "actions.py", "Perform the list user call"
 "When", "I update "{user_name}" user", "actions.py", "Update the user"
