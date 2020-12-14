@@ -28,7 +28,8 @@
     "TwinRobinUser": {
       "email": "robinplayer@test.com",
       "password": "robin!123",
-      "role": "Player"
+      "role": "Player",
+      "is_temporary": true
     }
   }
 }

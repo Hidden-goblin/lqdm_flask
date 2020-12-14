@@ -93,7 +93,9 @@ class SignupApi(Resource):
             user.hash_password()
             user.save()
             id = user.id
-            return Response(dumps({'id': str(id), "message": "subscription successful"}), mimetype="application/json", status=200)
+            return Response(dumps({'id': str(id), "message": "subscription successful"}),
+                            mimetype="application/json",
+                            status=200)
         except Exception as exception:
             return error_message(exception.args, 500)
 
@@ -190,8 +192,9 @@ class LogoutApi(Resource):
         body = request.get_json()
         user = User.objects.get(email=body.get("email"))
         session, error = is_access_granted(get_jwt_identity(), get_jwt_claims(), User.get_roles())
-        if session and user.email == User.objects.get(id=get_jwt_identity()):
-            Session.objects.delete(user_hash=get_jwt_claims()["hash"])
+        if session and user.email == (User.objects.get(id=get_jwt_identity())).email:
+            session = Session.objects(user_hash=get_jwt_claims()["hash"])
+            session.delete()
             return error_message("Session ended", 200)
         else:
             return error_message("Cannot terminate the session", error)
@@ -250,7 +253,9 @@ class UserApi(Resource):
         user_session, status_code = is_access_granted(get_jwt_identity(), get_jwt_claims(), ("Admin",))
         if user_session:
             try:
-                return Response(User.objects.get(email=user_id).to_json(use_db_field=False),
+                user = User.objects.get(email=user_id).to_json(use_db_field=False)
+                log.debug(user)
+                return Response(user,
                                 mimetype="application/json", status=200)
             except DoesNotExist as done:
                 return error_message(done.args, 404)
@@ -297,9 +302,8 @@ class UserApi(Resource):
               schema:
                 $ref: '#/definitions/dateless_account'
         responses:
-            200:
-                schema:
-                    $ref: '#/definitions/account'
+            204:
+                description: 'Update is successful'
             401:
                 schema:
                     $ref: '#/definitions/error'
@@ -323,7 +327,7 @@ class UserApi(Resource):
                     req.pop("email")
                 req = update_payload(req)
                 user.update(**req)
-                return Response()
+                return Response(dumps({}), status=204)
             except DoesNotExist as done:
                 return error_message(done.args, 404)
             except MultipleObjectsReturned as mor:
@@ -352,30 +356,45 @@ class UserApi(Resource):
             204:
                 description: "The user has been successfully deleted"
             401:
+                description: "Access forbidden. you may access it if authenticated."
                 schema:
                     $ref: '#/definitions/error'
+                examples:
+                    message: "You don't have access to this resource."
             403:
                 schema:
                     $ref: '#/definitions/error'
+                examples:
+                    message: "Cannot delete account"
             404:
                 schema:
                     $ref: '#/definitions/error'
+                examples:
+                    message: "Account not found."
         """
+        # Check authentication
         try:
             verify_jwt_in_request()
         except NoAuthorizationError as no_auth:
             return error_message("You don't have access to this resource.", 401)
-        user = User.objects.get(email=user_id)
+
+        user = User.objects.get(email=user_id)  # User to delete
+
         if user == User.objects.get(id=get_jwt_identity()):
             user_session, status_code = is_access_granted(get_jwt_identity(),
                                                           get_jwt_claims(),
                                                           (user.role,))
-            if user_session:
+            if user_session:  # User can delete its account.
+                if user.role == "Admin":  # Check he's not the last Admin
+                    admin_users = User.objects(role="Admin").count()
+                    if admin_users == 1:
+                        return error_message("Cannot delete account", status_code=403)
                 user.delete()
                 return Response(status=204)
             else:
                 return error_message("Cannot delete account", status_code=status_code)
         else:
+            # This is an admin deleting another account. An Admin account will still be available
             user_session, status_code = is_access_granted(get_jwt_identity(),
                                                           get_jwt_claims(),
                                                           ('Admin',))

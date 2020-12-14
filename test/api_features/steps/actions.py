@@ -17,3 +17,13 @@ def list_user(context):
     except Exception as exception:
         context.model.push_event(f"Retrieve error : {exception}")
         raise AssertionError(exception)
+
+
+@When(u'I delete "{user_name}" user')
+def delete_user(context, user_name):
+    try:
+        user = context.data["users"][user_name]
+        context.response = context.model.delete_user(email=user["email"])
+    except Exception as exception:
+        context.model.push_event(f"Retrieve error : {exception}")
+        raise AssertionError(exception)

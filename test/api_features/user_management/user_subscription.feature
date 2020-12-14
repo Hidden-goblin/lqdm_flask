@@ -10,6 +10,7 @@ Feature: User subscription
     Then I get "<status>" http status code
     And I receive "<message>" message
 
+    @error
     Examples: Missing mandatory
       | field    | message                 | status |
       | email    | email is mandatory      | 400    |
@@ -20,6 +21,7 @@ Feature: User subscription
       | none  | subscription successful | 200     |
 
 
+  @error
   Scenario: Existing user
     Given I am "TwinRobinUser"
     And "RobinUser" exists

@@ -1,6 +1,6 @@
 from dpath.util import get as dp_get
 from behave import Given
-
+from api_features.steps.actions import subscribe
 
 @Given('I am "{user_name}"')
 def set_user(context, user_name):
@@ -62,10 +62,41 @@ def check_user_existence(context, user_name):
 
         context.model.login(email=admin["email"], password=admin["password"])
         response = context.model.users(email=requested_user["email"])
-        if response.status_code != 200:
-            raise AssertionError(f"User {user_name} doesn't exist")
-
         context.model.logout(email=admin["email"])
+
+        if response.status_code != 200:
+            context.model.push_event(f"Create {user_name} account")
+            context.model.sign_up(email=requested_user['email'],
+                                  password=requested_user['password'])
+
+    except Exception as exception:
+        context.model.push_event(f"Retrieve error : {exception}")
+        raise AssertionError(exception)
+
+
+@Given(u'I have subscribed')
+def have_subscribed(context):
+    try:
+        subscribe(context)
+        if context.response.status_code != 200:
+            context.model.push_event("User may already have subscribed")
+    except Exception as exception:
+        context.model.push_event(f"Retrieve error : {exception}")
+        raise AssertionError(exception)
+
+
+@Given(u'There is "{number}" account with role "{role}"')
+def check_number_of_account_type(context, number, role):
+    try:
+        admin = context.data["users"]["BobAdmin"]
+
+        context.model.login(email=admin["email"], password=admin["password"])
+        response = context.model.users()
+        context.model.logout(email=admin["email"])
+
+        assert response.status_code == 200, "Get an error when retrieving user's account"
+        admin_account = [item for item in response.json() if item["role"] == role]
+        assert len(admin_account) == int(number), f"Retrieve {len(admin_account)} while expecting {number}"
     except Exception as exception:
         context.model.push_event(f"Retrieve error : {exception}")
         raise AssertionError(exception)
