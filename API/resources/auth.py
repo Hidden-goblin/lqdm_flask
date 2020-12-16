@@ -151,7 +151,7 @@ class LogoutApi(Resource):
 
     def post(self):
         """
-        Log into the app by requesting a JWT
+        Ask for JWT revokation.
         ---
         tags:
             - users

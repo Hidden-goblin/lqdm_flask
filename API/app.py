@@ -37,6 +37,18 @@ def create():
     }
 
     swagger_template = {
+        "info": {
+            "title": "LQDM API",
+            "description": "LQDM characters management.",
+            "contact": {
+                "responsibleOrganization": "ME",
+                "responsibleDeveloper": "Me",
+                "email": "me@me.com",
+                "url": "www.me.com",
+            },
+            # "termsOfService": "http://me.com/terms",
+            "version": "0.1"
+        },
         "components": {
             "securitySchemes": {
                 "BearerAuth": {

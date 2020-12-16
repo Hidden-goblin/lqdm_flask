@@ -42,3 +42,22 @@ def check_message(context, message, message_type=""):
 @Then(u'I receive "{message}" message')
 def check_received_message(context, message):
     check_message(context, message)
+
+
+@Then(u'The "{user_name}" account "{status}" exist')
+def check_user_existence(context, user_name, status):
+    try:
+        requested_user = context.data["users"][user_name]
+        admin = context.data["users"]["BobAdmin"]
+
+        context.model.login(email=admin["email"], password=admin["password"])
+        response = context.model.users(email=requested_user["email"])
+        context.model.logout(email=admin["email"])
+
+        if status == "does":
+            assert response.status_code == 200, f"User {user_name} is not found while he should be"
+        elif status == "does not":
+            assert response.status_code == 404, f"User {user_name} is found while he should not be"
+    except Exception as exception:
+        context.model.push_event(f"Retrieve error : {exception}")
+        raise AssertionError(exception)
