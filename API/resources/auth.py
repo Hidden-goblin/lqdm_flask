@@ -151,7 +151,7 @@ class LogoutApi(Resource):
 
     def post(self):
         """
-        Ask for JWT revokation.
+        Ask for JWT revocation.
         ---
         tags:
             - users

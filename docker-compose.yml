@@ -53,8 +53,6 @@ services:
     grafana:
         image: grafana/grafana:master
         container_name: grafana
-        volumes:
-            - grafana-data:/var/lib/grafana
         expose:
             - 3000
         ports:
